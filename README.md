@@ -1,6 +1,6 @@
 # local-MCserver-manger-Discordbo
 
-A discord bot coded in python that has the applity to start/save/stop a mincraft server hosted on the same machine that the bot is running in
+A discord bot coded in python that has the ability to start/save/stop a mincraft server hosted on the same machine that the bot is running in
 
 to use this.
 1-download the Main.py file
