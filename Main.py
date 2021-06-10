@@ -62,8 +62,9 @@ async def on_message(message):
             if message.content == startCommand:
                 if running == False:
                     await message.channel.send('starting')
-                    await message.channel.send('use $stop to only stop the server')
-                    await message.channel.send('use $shutdown to stop the server and shutdown')
+                    await message.channel.send('use $stop to stop the server')
+                    if shutdownable == True:
+                        await message.channel.send('use $shutdown to stop the server and shutdown')
                     start()
                     running = True
                 else:
