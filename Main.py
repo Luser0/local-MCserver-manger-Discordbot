@@ -6,19 +6,18 @@ from discord.channel import DMChannel
 from os.path import join
 
 #config
-jarName = "fabric-server-launch.jar"
-pathtojar = ""
-allocatedRamInMB = "4096"
-
-commandSymbol = "$"
-stopCommand = "$stop"
-startCommand = "$start"
-saveCommand = "$save"
-shutdownCommand = "$shutdown"
-############################
+jarName = "server.jar"#name of the jar file used to start the server (server.jar is the defult but can be changed if you're using a mod launcher)
+pathtojar = ""#path to the server.jar (curently not in use but in the futrue can be used if you want to manage multiple MC servers)
+allocatedRamInMB = "4096" #sets the amount of ram allocated to the MC server in MB
+commandSymbol = "$"#sets the symbol that needs to exist at the start of each bot command
+startCommand = "$start"#sets the command for starting the MC server
+stopCommand = "$stop"#sets the command for stoping the MC server
+saveCommand = "$save" #sets the command for saving the word data
+shutdownCommand = "$shutdown" #sets the command for shuting down the host machine
 shutdownable = False #set to True if you want the bot to be able to shutdown the host machine
+############################
 
-shutdownable = False
+
 running = False
 client = discord.Client()
 
@@ -56,7 +55,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    elif message.content.startswith(commandSymbol):
+    elif message.content.startswith(commandSymbol):#skips checking the message content if the message doesn't start with the commandSymbol
 
         if message.content == startCommand:
             if running == False:
