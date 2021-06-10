@@ -15,6 +15,7 @@ stopCommand = "$stop"#sets the command for stoping the MC server
 saveCommand = "$save" #sets the command for saving the word data
 shutdownCommand = "$shutdown" #sets the command for shuting down the host machine
 shutdownable = False #set to True if you want the bot to be able to shutdown the host machine
+role="MC"#sets the role name that's able to execute bot commands("MC" by default)
 ############################
 
 
@@ -56,46 +57,47 @@ async def on_message(message):
         return
 
     elif message.content.startswith(commandSymbol):#skips checking the message content if the message doesn't start with the commandSymbol
-
-        if message.content == startCommand:
-            if running == False:
-                await message.channel.send('starting')
-                await message.channel.send('use $stop to only stop the server')
-                await message.channel.send('use $shutdown to stop the server and shutdown')
-                start()
-                running = True
-            else:
-                await message.channel.send('already running')
-                
-        elif message.content == stopCommand:
-            if running == True:
-                await message.channel.send('stoping')
-                stop()
-                running = False
-            else:
-                await message.channel.send('server is not running')
-
-        elif message.content == saveCommand:
-            if running == True:
-                await message.channel.send('saving')
-                save()
-            else:
-                await message.channel.send('server is not running')
-
-        elif message.content == shutdownCommand:
-            if shutdownable == True:
+        controlRole = discord.utils.get(message.author.guild.roles, name=role)
+        if controlRole in message.author.roles:
+            if message.content == startCommand:
+                if running == False:
+                    await message.channel.send('starting')
+                    await message.channel.send('use $stop to only stop the server')
+                    await message.channel.send('use $shutdown to stop the server and shutdown')
+                    start()
+                    running = True
+                else:
+                    await message.channel.send('already running')
+                    
+            elif message.content == stopCommand:
                 if running == True:
-                    await message.channel.send('stoping and shutting down')
+                    await message.channel.send('stoping')
                     stop()
                     running = False
-                    shutdown()
                 else:
-                    await message.channel.send('shutting down')
-                    shutdown()
+                    await message.channel.send('server is not running')
+
+            elif message.content == saveCommand:
+                if running == True:
+                    await message.channel.send('saving')
+                    save()
+                else:
+                    await message.channel.send('server is not running')
+
+            elif message.content == shutdownCommand:
+                if shutdownable == True:
+                    if running == True:
+                        await message.channel.send('stoping and shutting down')
+                        stop()
+                        running = False
+                        shutdown()
+                    else:
+                        await message.channel.send('shutting down')
+                        shutdown()
+                else:
+                    await message.channel.send('the shutdown command is not enabled')
             else:
-                await message.channel.send('the shutdown command is not enabled')
-        else:
-            return
+                return
     else:
         return
             
