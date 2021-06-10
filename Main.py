@@ -6,14 +6,14 @@ from discord.channel import DMChannel
 from os.path import join
 
 #config
-jarName = "server.jar"#name of the jar file used to start the server (server.jar is the defult but can be changed if you're using a mod launcher)
-pathtojar = ""#path to the server.jar (curently not in use but in the futrue can be used if you want to manage multiple MC servers)
+jarName = "server.jar"#name of the jar file used to start the server (server.jar is the default but can be changed if you're using a mod launcher)
+pathtojar = ""#path to the server.jar (currently not in use but in the futrue can be used if you want to manage multiple MC servers)
 allocatedRamInMB = "4096" #sets the amount of ram allocated to the MC server in MB
 commandSymbol = "$"#sets the symbol that needs to exist at the start of each bot command
 startCommand = "$start"#sets the command for starting the MC server
-stopCommand = "$stop"#sets the command for stoping the MC server
+stopCommand = "$stop"#sets the command for stopping the MC server
 saveCommand = "$save" #sets the command for saving the word data
-shutdownCommand = "$shutdown" #sets the command for shuting down the host machine
+shutdownCommand = "$shutdown" #sets the command for shutting down the host machine
 shutdownable = False #set to True if you want the bot to be able to shutdown the host machine
 role="MC"#sets the role name that's able to execute bot commands("MC" by default)
 ############################
@@ -40,9 +40,9 @@ def stop():
         mc_subprocess.stdin.flush()
 
 def shutdown():
-    #by defualt this puts the pc in hibernation mode to allow for wake on lan without BIOS support
+    #by default this puts the pc in hibernation mode to allow for wake on lan without BIOS support
     #(change the /h to /s if your BIOS supports wake on lan or you don't care about waking the pc up again)
-    if shutdownable == True:#a redundant check to see if shuting down is enabled (there is another check before we even call the function)
+    if shutdownable == True:#a redundant check to see if shutting down is enabled (there is another check before we even call the function)
         os.system("shutdown.exe /h")
 
 
