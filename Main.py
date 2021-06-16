@@ -14,13 +14,22 @@ startCommand = "$start"#sets the command for starting the MC server
 stopCommand = "$stop"#sets the command for stopping the MC server
 saveCommand = "$save" #sets the command for saving the word data
 shutdownCommand = "$shutdown" #sets the command for shutting down the host machine
-shutdownable = False #set to True if you want the bot to be able to shutdown the host machine
+shutdownEnabled = False #set to True if you want the bot to be able to shutdown the host machine
 role="MC"#sets the role name that's able to execute bot commands("MC" by default)
+
+#Those commands are for pausing/resuming the ability to shutdown the host machine(only works if shutdownEnabled is set to True)
+shutdownControlRole="MCHost"#set the role name that's able to use them (aka hostRole later in code)
+shutdownableFalseCommand ="$pause shutdowns"#sets the pause command
+shutdownableTrueCommand="$resume shutdowns"#sets the resume command
 ############################
 
-
+############################
+shutdownable = False
 running = False
 client = discord.Client()
+
+if shutdownEnabled == True:
+    shutdownable = True
 
 def start():
     if running == False:
@@ -53,11 +62,13 @@ async def on_ready():
 @client.event
 async def on_message(message):
     global running
+    global shutdownable
     if message.author == client.user:
         return
 
     elif message.content.startswith(commandSymbol):#skips checking the message content if the message doesn't start with the commandSymbol
         controlRole = discord.utils.get(message.author.guild.roles, name=role)
+        hostRole = discord.utils.get(message.author.guild.roles, name=shutdownControlRole)
         if controlRole in message.author.roles:
             if message.content == startCommand:
                 if running == False:
@@ -97,8 +108,30 @@ async def on_message(message):
                         shutdown()
                 else:
                     await message.channel.send('the shutdown command is not enabled')
+
+            elif shutdownEnabled == True:
+                if hostRole in message.author.roles:
+                    if message.content == shutdownableFalseCommand:
+                        if shutdownable == True:
+                            await message.channel.send('The bot is now unable to shut down the host machine')
+                            shutdownable = False
+                        else:
+                            await message.channel.send('The bot is already unable to shut down the host machine')
+
+                    elif message.content == shutdownableTrueCommand:
+                        if shutdownable == False:
+                            await message.channel.send('The bot is now able to shut down the host machine')
+                            shutdownable = True
+                        else:
+                            await message.channel.send('The bot is already able to shut down the host machine')
+                    else:
+                        return
+                else:
+                    return
             else:
                 return
+        else:
+            return
     else:
         return
             
