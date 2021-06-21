@@ -6,10 +6,12 @@ To use it.
 
 1-Download the Main.py file
 
-2-Place it inside the minecraft server folder you want to manage
+2- install discord.py with `pip install discord.py`
 
-3-Edit the config part of the code to your launch settings
+3-Place it inside the minecraft server folder you want to manage
 
-4-Add your discord bot token at the end of the file
+4-Edit the config part of the code to your launch settings
 
-5-Run and enjoy
+5-Add your discord bot token at the end of the file
+
+6-Run and enjoy
