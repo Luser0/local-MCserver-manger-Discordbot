@@ -136,5 +136,6 @@ async def on_message(message):
         return
             
     
-         
-client.run('discord token')
+with open("token.txt",'r') as tokenFile:
+    token = tokenFile.readline()
+client.run(token)
