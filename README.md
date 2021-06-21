@@ -12,6 +12,6 @@ To use it.
 
 4-Edit the config part of the code to your launch settings
 
-5-Add your discord bot token at the end of the file
+5-Paste your discord bot token in the token.txt file
 
 6-Run and enjoy
